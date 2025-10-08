@@ -2,8 +2,11 @@
 
 # Thrush Programming Language | Syntax
 
+> [!CAUTION]
+> Most of the syntax in this repository is outdated. A new website with detailed documentation is on the way. Please be patient.
+
 > [!WARNING]  
-> The compiler updates faster than this repository, so not everything can be compiled by the current compiler. This is speculative.
+> The compiler updates faster than this repository. The syntax may be outdated and non-idiomatic.
 
 This repository contains detailed and general information about the syntax; it is not documentation as such; it is intended to guide you in developing the compiler and the language.
 
