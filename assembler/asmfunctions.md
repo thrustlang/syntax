@@ -1,28 +1,45 @@
+<img src= "https://github.com/thrustlang/.github/blob/main/assets/logos/new%20logo/thrustlang-logo-banner-text-italic.png" alt= "logo" style= "width: 80%; height: 80%;"></img>
+
 # Assembler Functions
 
-Assembler functions are purely assembler-based functions. They support Intel & AT&T x86_64 assembler.
+<img src= "https://github.com/thrustlang/.github/blob/main/assets/standard-text-separator.png" alt= "standard-separator" style= "width: 1hv;"> </img>
 
-## Code
+Assembler functions are functions written entirely in inline assembler. They support Intel and AT&T x86_64 assembler.
 
-```rust
+> [!WARNING]
+> This syntax is **unstable**. It only works when the compiler runs in unstable mode, and it can change or disappear.
+
+The body has two blocks. The first block holds the assembler lines, each as a null-terminated string. The second block holds the constraints.
+
+```thrust
 asmfn invoke_exit_syscall() void {
     "mov $$60, %rax",
     "mov $$1, %rdi",
-    "syscall" // Assembler Code
-} { 
-    "~{rax}~{rdi}" // Constraints
+    "syscall"
+} {
+    "~{rax}~{rdi}"
 }
 
-fn main() u32 {
-
+fn main() s32 @public {
     invoke_exit_syscall();
     return 0;
-
 }
 ```
 
-## LLVM Inline Assembler
+Assembler functions accept parameters, a return type, and attributes, like normal functions.
 
-The syntax depends on each backend usage. If you use the LLVM backend with ``-llvm``, the syntax within the assembler will be the one supported by LLVM by default. For more information, see: https://llvm.org/docs/LangRef.html
+```thrust
+asmfn add(a: u32, b: u32) u32 @public @asmSyntax("Intel") {
+    "mov %eax, $0"
+} {
+    "=r"
+}
+```
 
-<img src= "https://github.com/thrushlang/syntax/blob/master/assets/LLVM-inline-assembler-ref.png" alt= "llvm-inline-assembler-ref" style= "width: 50%; height: 50%;"> </img>
+## LLVM inline assembler
+
+The syntax inside the assembler strings follows the LLVM inline assembler format. For more information, see the LLVM language reference: <https://llvm.org/docs/LangRef.html>
+
+<img src= "assets/LLVM-inline-assembler-ref.png" alt= "llvm-inline-assembler-ref" style= "width: 50%; height: 50%;"> </img>
+
+Related unstable attributes: ``@asmSyntax("Intel" | "AT&T")``, ``@asmAlignStack``, ``@asmThrowErrors``, ``@asmSideEffects``.

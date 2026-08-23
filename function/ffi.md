@@ -1,14 +1,31 @@
-# Functions
+<img src= "https://github.com/thrustlang/.github/blob/main/assets/logos/new%20logo/thrustlang-logo-banner-text-italic.png" alt= "logo" style= "width: 80%; height: 80%;"></img>
 
-## Foreign function interface (FFI)
+# Foreign Function Interface (FFI)
 
-The **Foreign Function Interface** (FFI) is a mechanism that allows code written in one programming language to call functions or use libraries written in another language. It acts as a bridge, enabling seamless interaction between different languages, such as calling C functions from Python or Rust. FFI handles differences in data types, memory management, and calling conventions, making it essential for integrating diverse systems or leveraging existing libraries without rewriting code.
+<img src= "https://github.com/thrustlang/.github/blob/main/assets/standard-text-separator.png" alt= "standard-separator" style= "width: 1hv;"> </img>
 
-## Thrush solution
+The foreign function interface lets Thrust call code written in another language, usually C. It works by declaring a function prototype and telling the compiler which external symbol to use.
 
-In Thrush, to call external code, we use the @extern("name") attribute, where the name represents the external function to be searched for at call time. This attribute only applies to functions; it is ignored by other structures.
+## The ``@extern`` attribute
 
-```rust
+``@extern("name")`` names the external symbol that the compiler looks for at call time. It only applies to functions. A function without ``@public`` or ``@extern`` gets an obfuscated name in the output, so it is not meant to be seen from outside.
+
+```thrust
 fn sum(a: u64, b: u64) u64 @public @extern("sum_c");
 ```
 
+## Calling conventions
+
+The ``@convention("name")`` attribute sets how arguments and return values pass between caller and callee. The most common is the C convention.
+
+```thrust
+fn printf(fmt: const array[char]) s32 @public @arbitraryArgs @extern("printf") @convention("C");
+```
+
+## Other attributes
+
+- ``@public`` keeps the plain function name in the output.
+- ``@linkage("kind")`` sets the linkage, for example ``"internal"`` or ``"weak"``.
+- ``@arbitraryArgs`` marks the function as variadic, as in ``printf``.
+
+This syntax is **stable**. For importing whole C libraries at once, see ``importC`` in ``modules/import.md``, which is **unstable**.

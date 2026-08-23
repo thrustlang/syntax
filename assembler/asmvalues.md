@@ -1,25 +1,30 @@
-## Assembler Values
+<img src= "https://github.com/thrustlang/.github/blob/main/assets/logos/new%20logo/thrustlang-logo-banner-text-italic.png" alt= "logo" style= "width: 80%; height: 80%;"></img>
 
-Assembler values ​​are blocks of code made entirely in assembler that can be used as common values ​​in the language.
+# Assembler Values
 
-## Code
+<img src= "https://github.com/thrustlang/.github/blob/main/assets/standard-text-separator.png" alt= "standard-separator" style= "width: 1hv;"> </img>
 
-```rust
-fn main() u32 {
+Assembler values are blocks of code written entirely in assembler that can be used as normal values in the language. They carry a type, optional arguments, and two blocks for the assembler lines and the constraints.
 
-    local whatever: u32 = asm u32 {
+> [!WARNING]
+> This syntax is **unstable**. It only works when the compiler runs in unstable mode, and it can change or disappear.
+
+```thrust
+fn main() s32 @public {
+    var whatever: u32 = asm u32 {
         "mov $$42, %eax"
     } {
         ""
     } + 20;
 
     return 0;
-
 }
 ```
 
-## LLVM Inline Assembler
+Assembler values can take arguments inside parentheses after the type, separated by ``:``.
 
-The syntax depends on each backend usage. If you use the LLVM backend with ``-llvm``, the syntax within the assembler will be the one supported by LLVM by default. For more information, see: https://llvm.org/docs/LangRef.html
+## LLVM inline assembler
 
-<img src= "https://github.com/thrushlang/syntax/blob/master/assets/LLVM-inline-assembler-ref.png" alt= "llvm-inline-assembler-ref" style= "width: 50%; height: 50%;"> </img>
+The syntax inside the assembler strings follows the LLVM inline assembler format. For more information, see the LLVM language reference: <https://llvm.org/docs/LangRef.html>
+
+<img src= "assets/LLVM-inline-assembler-ref.png" alt= "llvm-inline-assembler-ref" style= "width: 50%; height: 50%;"> </img>

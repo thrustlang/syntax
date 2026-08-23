@@ -1,31 +1,37 @@
+<img src= "https://github.com/thrustlang/.github/blob/main/assets/logos/new%20logo/thrustlang-logo-banner-text-italic.png" alt= "logo" style= "width: 80%; height: 80%;"></img>
+
 # Structures
 
-Structures behave like in languages ​​like C. They are traditional structures.
+<img src= "https://github.com/thrustlang/.github/blob/main/assets/standard-text-separator.png" alt= "standard-separator" style= "width: 1hv;"> </img>
 
-## Memory Information
+Structures behave like in C. They are traditional structures, a set of named fields with their own types.
+
+## Memory information
 
 - Allocation site: ``Stack or Heap``.
-- Prefer allocation site: ``Stack``.
+- Preferred allocation site: ``Stack``.
 
-## Code
+## Declaration
 
-```rust
-struct MyStruct {
-    size: s64
-    length: s32
+Fields are written as ``name: Type`` and separated by commas.
+
+```thrust
+struct MyStruct @public {
+    size: s64,
+    length: s32,
     matter: bool
 }
 ```
 
-```rust
-struct MyStruct {
-    size i64
-    length i32
-    matter bool
-};
+The ``@public`` attribute keeps the struct name in the output. The ``@packed`` attribute makes the compiler use a packed layout, without padding.
 
-fn main() u32 {
-    local some_struct: MyStruct = new MyStruct {
+## Construction
+
+A value is built with ``new``, giving each field by name.
+
+```thrust
+fn main() s32 @public {
+    var some_struct: MyStruct = new MyStruct {
         matter: true,
         length: 12,
         size: 12312
@@ -35,3 +41,6 @@ fn main() u32 {
 }
 ```
 
+Fields are read with the dot operator: ``some_struct.size``.
+
+This syntax is **stable**.

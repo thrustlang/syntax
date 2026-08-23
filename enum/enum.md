@@ -1,26 +1,26 @@
+<img src= "https://github.com/thrustlang/.github/blob/main/assets/logos/new%20logo/thrustlang-logo-banner-text-italic.png" alt= "logo" style= "width: 80%; height: 80%;"></img>
+
 # Enums
 
-In thrush enums allow you to have constants as variants of enums, in addition to dynamic values.
+<img src= "https://github.com/thrustlang/.github/blob/main/assets/standard-text-separator.png" alt= "standard-separator" style= "width: 1hv;"> </img>
 
-## Code
+Enums hold named variants. Each variant has a type and a value, written as ``Name: Type = value;`` and separated by semicolons.
 
-```rust
-enum Colors {
+```thrust
+enum Colors @public {
     Red: u32 = 0;
     Yellow: u32 = 1;
     Blue: u32 = 2;
 }
+```
 
-// Compile time function.
-fn jit_test() u32 @comptime {
-    return 1231 / 1231;
-}
+A variant value is read with the arrow operator: ``Colors->Yellow``. It behaves like a constant, so it can be used in expressions.
 
-enum DynamicColors {
-    Red: u32 = jit_test(); // In the future this will be allowed, but not until the Just-In-Time Compiler (JIT) is finished.
-}
-
-fn main() {
-    local yellow_plus_red: u32 = Colors->Yellow + Colors->Red;
+```thrust
+fn main() s32 @public {
+    var yellow_plus_red: u32 = Colors->Yellow + Colors->Red;
+    return 0;
 }
 ```
+
+This syntax is **stable**.

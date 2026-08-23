@@ -1,11 +1,15 @@
+<img src= "https://github.com/thrustlang/.github/blob/main/assets/logos/new%20logo/thrustlang-logo-banner-text-italic.png" alt= "logo" style= "width: 80%; height: 80%;"></img>
+
 # Loop
 
-It's simple infinite loop.
+<img src= "https://github.com/thrustlang/.github/blob/main/assets/standard-text-separator.png" alt= "standard-separator" style= "width: 1hv;"> </img>
 
-## Code
+The ``loop`` construct is a simple infinite loop. The block repeats forever unless it is stopped with ``break``.
 
-```rust
+```thrust
 loop {
-    // to-do
+    // loop body
 }
 ```
+
+This syntax is **stable**.

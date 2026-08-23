@@ -1,13 +1,19 @@
+<img src= "https://github.com/thrustlang/.github/blob/main/assets/logos/new%20logo/thrustlang-logo-banner-text-italic.png" alt= "logo" style= "width: 80%; height: 80%;"></img>
+
 # Continue | Loop Control Flow
 
-It behaves exactly the same as in C, it continues to the next iteration.
+<img src= "https://github.com/thrustlang/.github/blob/main/assets/standard-text-separator.png" alt= "standard-separator" style= "width: 1hv;"> </img>
 
-## Code
+``continue`` jumps to the next iteration of the loop, skipping the rest of the block. It behaves the same as in C.
 
-```rust
-for local mut i: u32 = 0; i < 1000; ++i; {
+```thrust
+for var i: u32 = 0; i < 1000; i++; {
     if i >= 666 {
         continue;
     }
 }
 ```
+
+``continueall`` skips to the next iteration of every loop in the nesting at once.
+
+This syntax is **stable**.
