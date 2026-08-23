@@ -1,0 +1,3 @@
+[submodule "thrustc"]
+	path = thrustc
+	url = https://github.com/thrustlang/thrustc
