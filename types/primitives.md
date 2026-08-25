@@ -53,7 +53,7 @@ The null-terminated string type is a constant array of characters: ``const array
 - ``ptr[T]`` A strongly typed pointer to ``T``.
 - ``ptr[T, N]`` A pointer to ``T`` in the address space ``N``.
 
-Pointers can nest, for example ``ptr[ptr[u8]]``.
+Pointers can nest, for example ``ptr[ptr[u8]]``. The ``nullptr`` literal is the null value of any pointer type.
 
 ## Array type
 
@@ -62,6 +62,41 @@ Pointers can nest, for example ``ptr[ptr[u8]]``.
 
 Arrays can also carry an address space: ``array[T, N]`` and ``array[T; N, N]``.
 
+A fixed array is built with the ``fixed`` literal, which lists the elements inside brackets.
+
+```thrust
+var arr: array[s32; 4] = fixed[10, 20, 30, 40];
+```
+
+The size of a fixed array can be any expression known at compile time, including arithmetic over constants and builtins.
+
+```thrust
+const N: u32 = 8;
+
+static buffer: array[u8; N * 2];
+var samples: array[f64; N + 2];
+```
+
 ## Function type
 
 - ``Fn[param, ...] @attrs -> ret`` A reference to a function that takes the given parameter types and returns ``ret``. The ``@arbitraryArgs`` attribute marks it variadic.
+
+## Example
+
+```thrust
+fn main() s32 @public {
+    var count: u32 = 1000;
+    var balance: f64 = 0.0;
+    var done: bool = false;
+    var letter: char = 'a';
+    var name: const array[char] = "hello";
+
+    var pointer: ptr[u32] = nullptr;
+    var values: array[s32; 3] = fixed[1, 2, 3];
+
+    if isFunction(Fn[s32, s32] -> s32) == false { return 1; }
+    if isFixedArray(values) == false { return 2; }
+
+    return count;
+}
+```

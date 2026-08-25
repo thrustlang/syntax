@@ -16,4 +16,12 @@ for var i: u32 = 0; i < 1000; i++; {
 
 ``continueall`` skips to the next iteration of every loop in the nesting at once.
 
+```thrust
+for var i: u32 = 0; i < 1000; i++; {
+    loop {
+        continueall;
+    }
+}
+```
+
 This syntax is **stable**.

@@ -24,6 +24,11 @@ fn main() s32 @public {
 The keyword can repeat to unwrap several layers: ``deref deref p``. It also accepts the same modificators as locals, such as ``volatile`` and the atomic ordering levels.
 
 ```thrust
+var pointer: ptr[ptr[u32]] = halloc(ptr[u32]);
+var value: u32 = deref deref pointer;
+```
+
+```thrust
 var value: u32 = deref volatile pointer;
 ```
 

@@ -25,6 +25,13 @@ struct MyStruct @public {
 
 The ``@public`` attribute keeps the struct name in the output. The ``@packed`` attribute makes the compiler use a packed layout, without padding.
 
+```thrust
+struct PackedPoint @packed {
+    x: u8,
+    y: u32
+}
+```
+
 ## Construction
 
 A value is built with ``new``, giving each field by name.
@@ -41,6 +48,47 @@ fn main() s32 @public {
 }
 ```
 
-Fields are read with the dot operator: ``some_struct.size``.
+Fields are read and written with the dot operator.
+
+```thrust
+var some_size: s64 = some_struct.size;
+some_struct.size = 2048;
+```
+
+## Property dereference
+
+The arrow operator ``->`` reads or writes a field with an implicit dereference: ``v->a`` is sugar for ``deref v.a``. It works on struct values and on pointers to structs.
+
+```thrust
+fn main() s32 @public {
+    var point: MyStruct = new MyStruct {
+        matter: true,
+        length: 12,
+        size: 12312
+    };
+
+    var size: s64 = point->size;
+    point->length = 13;
+
+    return 0;
+}
+```
+
+The arrow also composes with indexation. When a field is an array or a pointer, ``v->data->[2]`` reads the field and indexes it with an implicit dereference.
+
+```thrust
+struct Wrapper {
+    data: ptr[array[s32; 4]],
+}
+
+fn main() s32 @public {
+    var arr: array[s32; 4] = fixed[10, 20, 30, 40];
+    var v := new Wrapper { data: ref arr };
+
+    var element: s32 = v->data->[2];
+
+    return 0;
+}
+```
 
 This syntax is **stable**.

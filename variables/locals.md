@@ -25,8 +25,11 @@ A local can also carry a modificator that changes how the compiler and the hardw
 - ``threadInit``, ``threadDyn``, ``threadExec``, ``threadLDyn`` Thread storage modes.
 
 ```thrust
-var atomic counter: u32 = 0;
 var volatile flag: bool = false;
+var atomic counter: u32 = 0;
+var atomicRelax balance: f64 = 0.0;
+var lazyThread cache: u32 = 0;
+var threadInit worker: u32 = 0;
 ```
 
 This syntax is **stable**.

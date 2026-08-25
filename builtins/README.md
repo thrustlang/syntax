@@ -26,6 +26,20 @@ const PAIR_ALIGN: u32 = alignOf(pair_u32);
 const PAIR_FIELDS: usize = fieldCount(pair_u32);
 ```
 
+### Type information
+
+- ``fixedArraySize(Type)`` Returns the element count of a fixed array type, as ``usize``. Example: ``fixedArraySize(array[u8; 4])`` is ``4``.
+- ``isSameType(A, B)`` Returns ``true`` when both types are exactly the same.
+- ``isPtrLike(Type)`` Returns ``true`` when the type is a pointer or otherwise pointer-like.
+- ``isFixedArrayOfSize(Type, N)`` Returns ``true`` when the type is a fixed array of exactly ``N`` elements.
+
+```thrust
+if fixedArraySize(array[u8; 4]) != 4 { return 1; }
+if isSameType(u32, u32) == false { return 2; }
+if isPtrLike(ptr[u32]) == false { return 3; }
+if isFixedArrayOfSize(array[u8; 4], 4) == false { return 4; }
+```
+
 ### Source location
 
 - ``file()`` Returns the current source file as a constant string.
@@ -40,6 +54,24 @@ const PAIR_FIELDS: usize = fieldCount(pair_u32);
 
 ```thrust
 staticAssert(sizeOf(u32) == 4, "u32 must be 4 bytes");
+```
+
+### Compiler information
+
+- ``compilerVersion()`` Returns the compiler version as a constant string.
+- ``debugBuild()`` Returns ``true`` when the compiler is a debug build.
+
+```thrust
+if stringLength(compilerVersion()) == 0 { return 1; }
+if debugBuild() != false { return 2; }
+```
+
+### Strings
+
+- ``stringLength(string)`` Returns the length of a constant string, as ``usize``.
+
+```thrust
+if stringLength("hello") != 5 { return 1; }
 ```
 
 ### Type predicates
@@ -66,8 +98,21 @@ The compiler targets a machine described by its target triple. These builtins re
 - ``isX86()``, ``isX8664()``, ``isArm()``, ``isAarch64()``, ``isRiscv64()``, ``isPpc()``, ``isPpc64()``, ``isMips64()``, ``isSystemz()``, ``isLoongarch64()``, ``isWasm()`` Return the target architecture.
 - ``isElf()``, ``isMachO()``, ``isCoff()`` Return the object file format.
 - ``hasPosixThreads()``, ``hasSysvAbi()`` Return platform capabilities.
+- ``pointerWidth()``, ``isizeWidth()``, ``usizeWidth()`` Return the width in bits of ``ptr``, ``ssize``, and ``usize``, as ``usize``.
+- ``pointerAlign()``, ``maxAlignment()`` Return the alignment in bytes of a pointer and the maximum supported alignment, as ``usize``.
+- ``targetCPU()``, ``targetCpuFeatures()`` Return the target CPU name and its enabled features as constant strings.
+- ``hasFeature("name")`` Returns whether the target CPU supports the given feature.
 
 These flags are useful with the compile-time conditionals documented in ``statements/compiletime.md``.
+
+## Host information
+
+The machine running the compiler reports its own resources. These builtins describe it:
+
+- ``hostName()`` Returns the host name as a constant string.
+- ``hostOsName()``, ``hostArch()``, ``hostEndian()`` Return the host operating system, architecture, and endianness as constant strings.
+- ``processorCount()``, ``pageSize()``, ``cpuCacheLineSize()`` Return host resource sizes, as ``usize``.
+- ``currentTimestamp()`` Returns the current timestamp, as ``usize``.
 
 ## Token builtins
 

@@ -21,8 +21,20 @@ The condition does not need parentheses. The form ``else if`` works the same as 
 ```thrust
 if result >= 0 {
     print("found\n");
+} else if result == -1 {
+    print("missing\n");
 } else {
     print("not found\n");
+}
+```
+
+The logical words ``and`` and ``or`` work as alternatives to the ``&&`` and ``||`` operators, and they combine in the same condition.
+
+```thrust
+if value > 0 and value < 100 {
+    // runs when value is between 1 and 99
+} else if value == 0 or value == 100 {
+    // runs at the boundaries
 }
 ```
 

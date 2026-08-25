@@ -23,6 +23,24 @@ fn main() s32 @public {
 
 Assembler values can take arguments inside parentheses after the type, separated by ``:``.
 
+```thrust
+fn main() s32 @public {
+    var a: u32 = 2;
+    var b: u32 = 3;
+
+    var result: u32 = asm u32(a : b) {
+        "mov $1, %eax",
+        "add $2, %eax"
+    } {
+        "=r",
+        "r",
+        "r"
+    };
+
+    return 0;
+}
+```
+
 ## LLVM inline assembler
 
 The syntax inside the assembler strings follows the LLVM inline assembler format. For more information, see the LLVM language reference: <https://llvm.org/docs/LangRef.html>

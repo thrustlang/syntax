@@ -28,4 +28,8 @@ fn printf(fmt: const array[char]) s32 @public @arbitraryArgs @extern("printf") @
 - ``@linkage("kind")`` sets the linkage, for example ``"internal"`` or ``"weak"``.
 - ``@arbitraryArgs`` marks the function as variadic, as in ``printf``.
 
+```thrust
+fn hidden_sum(a: u64, b: u64) u64 @public @extern("hidden_sum") @linkage("internal");
+```
+
 This syntax is **stable**. For importing whole C libraries at once, see ``importC`` in ``modules/import.md``, which is **unstable**.
