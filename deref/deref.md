@@ -38,4 +38,46 @@ The opposite operation, taking the address of a value, is written with ``ref``.
 var pointer: ptr[u32] = ref a;
 ```
 
+## load
+
+The ``load`` expression loads the pointer value stored at the memory location of an operand. It always yields a pointer to the value, without dereferencing into it.
+
+Like ``ref``, it keeps the type when it is already a pointer, and adds a pointer type when the operand is a value that lives in memory. It never unwraps a pointer layer.
+
+```thrust
+fn main() s32 @public {
+    var a: s32 = 42;
+    var p: ptr[s32] = ref a;
+
+    var q: ptr[s32] = load p;
+
+    return 0;
+}
+```
+
+Here ``load p`` reads the ``ptr[s32]`` stored in the variable ``p``. This is different from ``deref p``, which would read the ``s32`` value that ``p`` points to.
+
+It works on any operand that has a memory location: pointer variables, indexed array or pointer slots, and struct fields.
+
+```thrust
+fn main() s32 @public {
+    var a: s32 = 10;
+    var b: s32 = 20;
+
+    var arr: array[ptr[s32]; 2] = fixed[ref a, ref b];
+
+    var first: ptr[ptr[s32]] = load arr[0];
+
+    return 0;
+}
+```
+
+An operand that is a plain value without a memory address cannot be loaded; the compiler rejects it.
+
+The keyword accepts the same modificators as ``deref`` and locals, such as ``volatile`` and the atomic ordering levels.
+
+```thrust
+var q: ptr[s32] = load volatile p;
+```
+
 This syntax is **stable**.

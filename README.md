@@ -25,7 +25,7 @@ Each page in this repository marks what it documents as stable or unstable.
 - ``builtins/`` Built-in functions that are part of the compiler and the language.
 - ``cast/`` Compile-time type transformation.
 - ``constants/`` Traditional constants.
-- ``deref/`` High-level pointer dereferencing with ``deref`` and ``ref``.
+- ``deref/`` High-level pointer dereferencing with ``deref``, ``ref`` and ``load``.
 - ``enum/`` Traditional enum.
 - ``function/`` Functions, the foreign function interface (FFI), and compiler intrinsics.
 - ``loops/`` Traditional loops such as `for`, `while`, and `loop`, with their control flow.
