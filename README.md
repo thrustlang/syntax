@@ -32,5 +32,6 @@ Each page in this repository marks what it documents as stable or unstable.
 - ``modules/`` Importing code between files and modules.
 - ``statements/`` Conditional statements, compile-time conditionals, and deferred execution.
 - ``structure/`` Traditional structures.
+- ``generics/`` Generics types.
 - ``types/`` Native and primitive types of the language, and type aliases.
 - ``variables/`` Types of variables, their mutation, and statics.
