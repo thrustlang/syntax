@@ -32,4 +32,4 @@ fn printf(fmt: const array[char]) s32 @public @arbitraryArgs @extern("printf") @
 fn hidden_sum(a: u64, b: u64) u64 @public @extern("hidden_sum") @linkage("internal");
 ```
 
-This syntax is **stable**. For importing whole C libraries at once, see ``importC`` in ``modules/import.md``, which is **unstable**.
+This syntax is **stable**. For importing whole C libraries at once, see ``importC`` in ``modules/import.md``, which is **in development**.

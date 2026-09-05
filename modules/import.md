@@ -76,15 +76,21 @@ fn main() s32 @public {
 }
 ```
 
-## C imports
+## Standard library
 
-The ``importC`` statement imports an entire C library at once.
-
-> [!WARNING]
-> ``importC`` is **unstable**. It only works when the compiler runs in unstable mode, and it can change or disappear.
+Thrust provides a standard library that can be imported with the ``std::`` qualified path. 
 
 ```thrust
-importC "mylib";
+import std::io;
+import std::math;
+import std::mem;
+import std::collections::vector;
 ```
 
-Import and module syntax is **stable**, except ``importC`` which is **unstable**.
+To see more examples you can take a look in 'https://github.com/thrustlang/thrustc/tree/master/std'.
+
+## C imports
+
+> [!NOTE]
+> ``importC`` is still **in development**. It is unstable and not yet available.
+

@@ -14,7 +14,7 @@ This repository holds detailed and general information about the syntax of the *
 The compiler has two feature modes:
 
 - **Stable.** The syntax is recognized in the default mode. It is considered final, subject only to bug fixes. Keep in mind that the compiler is still maturing, so even stable syntax can hit issues in edge cases.
-- **Unstable.** The syntax is only recognized when the compiler runs in unstable mode. It is experimental, can change, and can be removed at any time. Assembler constructs (`asmfn`, `asm`, `global_asm`), `embedded`, `importC`, and the `@asm*` and `@promote` attributes are unstable.
+- **Unstable.** The syntax is only recognized when the compiler runs in unstable mode. It is experimental, can change, and can be removed at any time. Assembler constructs (`asmfn`, `asm`, `global_asm`), `embedded`, and the `@asm*` and `@promote` attributes are unstable. `importC` is still in development.
 
 Each page in this repository marks what it documents as stable or unstable.
 
