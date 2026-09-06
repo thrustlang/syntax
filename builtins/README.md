@@ -107,11 +107,9 @@ These flags are useful with the compile-time conditionals documented in ``statem
 
 ## Host information
 
-The machine running the compiler reports its own resources. These builtins describe it:
+The machine running the compiler reports information through these builtins:
 
-- ``hostName()`` Returns the host name as a constant string.
 - ``hostOsName()``, ``hostArch()``, ``hostEndian()`` Return the host operating system, architecture, and endianness as constant strings.
-- ``processorCount()``, ``pageSize()``, ``cpuCacheLineSize()`` Return host resource sizes, as ``usize``.
 - ``currentTimestamp()`` Returns the current timestamp, as ``usize``.
 
 ## Token builtins
