@@ -23,8 +23,24 @@ fn main() s32 @public {
 ### Memory and layout
 
 - ``@heap`` Allocates the value on the heap.
+- ``@dealloc`` On a local variable, schedules automatic deallocation at scope exit. On a function, use ``@deallocator`` instead.
+- ``@dealloc(function)`` On a local variable, schedules a specific cleanup function at scope exit.
+- ``@deallocator`` Marks a function as the deallocator for the type of its single pointer parameter.
 - ``@align(N)`` Sets the alignment of the value to ``N``.
 - ``@packed`` Uses a packed layout for a struct, without padding.
+
+```thrust
+fn dropBuffer(buffer: ptr[Buffer]) void @public @deallocator {
+    mem::freeMemory(buffer->data);
+}
+
+fn main() s32 @public {
+    var buffer @dealloc := newBuffer();
+    var raw @dealloc(mem::freeMemory): ptr = mem::allocateMemory(64);
+
+    return 0;
+}
+```
 
 ### Code generation
 
