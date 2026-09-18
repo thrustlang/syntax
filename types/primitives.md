@@ -45,7 +45,9 @@ A type wrapped in ``const`` cannot be mutated through that view.
 
 - ``const T`` Constant view of type ``T``.
 
-The null-terminated string type is a constant array of characters: ``const array[char]``. The builtin alias ``CString`` means the same thing.
+String data is represented as an array of characters. The builtin alias ``CString`` means ``array[char]``. Use ``const array[char]`` when the value must be viewed as immutable.
+
+Normal string literals, written ``"text"``, are null-terminated. Non-null-terminated string literals are written ``n#"text"``.
 
 ## Pointer type
 
@@ -60,7 +62,7 @@ Pointers can nest, for example ``ptr[ptr[u8]]``. The ``nullptr`` literal is the 
 - ``array[T]`` An array of ``T`` with a size known at runtime.
 - ``array[T; N]`` A fixed array of ``T`` with a size known at compile time.
 
-Arrays can also carry an address space: ``array[T, N]`` and ``array[T; N, N]``.
+Arrays can also carry an address space: ``array[T, ADDRESS_SPACE]`` and ``array[T; SIZE, ADDRESS_SPACE]``.
 
 A fixed array is built with the ``fixed`` literal, which lists the elements inside brackets.
 
@@ -80,6 +82,11 @@ var samples: array[f64; N + 2];
 ## Function type
 
 - ``Fn[param, ...] @attrs -> ret`` A reference to a function that takes the given parameter types and returns ``ret``. The ``@arbitraryArgs`` attribute marks it variadic.
+
+Only function-reference attributes that affect the function type are meaningful here. Today that mainly means ``@arbitraryArgs``.
+
+> [!NOTE]
+> ``addr`` is reserved and printed as a type token by the lexer, but the user-facing address type is not fully specified yet.
 
 ## Example
 

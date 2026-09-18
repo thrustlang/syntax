@@ -13,7 +13,7 @@ Structures behave like in C. They are traditional structures, a set of named fie
 
 ## Declaration
 
-Fields are written as ``name: Type`` and separated by commas.
+Fields are written as ``name: Type`` and separated by commas. A trailing comma is accepted.
 
 ```thrust
 struct MyStruct @public {
@@ -32,6 +32,14 @@ struct PackedPoint @packed {
 }
 ```
 
+Structs can be declared at the top level or inside a function body. They can also be generic.
+
+```thrust
+struct Wrapper[T] {
+    value: T,
+}
+```
+
 ## Construction
 
 A value is built with ``new``, giving each field by name.
@@ -47,6 +55,9 @@ fn main() s32 @public {
     return 0;
 }
 ```
+
+> [!NOTE]
+> The parser validates field names in constructors. Current code generation still initializes fields by constructor order, so write constructor fields in declaration order until this is fully resolved.
 
 Fields are read and written with the dot operator.
 

@@ -32,6 +32,8 @@ The branches can also hold a single statement without braces.
 @if(true) var a: s32 = 5; @else var a: s32 = 9999;
 ```
 
+The form ``@else if(condition)`` is also accepted and behaves like an ``@elif`` branch.
+
 ## At the top level
 
 Compile-time conditionals also work at the top level, selecting between functions, constants, statics, and imports.
@@ -60,5 +62,7 @@ The compiler only type-checks the branch that stays. A branch that will be dropp
     var only_on_false: s32 = not_a_real_function();
 }
 ```
+
+At the top level, compile-time conditions must be resolvable without depending on generic parameters. A chain with no active branch is an error.
 
 This syntax is **stable**.

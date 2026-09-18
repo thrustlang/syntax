@@ -14,13 +14,19 @@ enum Colors @public {
 }
 ```
 
-A variant value is read with the arrow operator: ``Colors->Yellow``. It behaves like a constant, so it can be used in expressions.
+A variant value is read with the fat arrow operator: ``Colors=>Yellow``. It behaves like a constant, so it can be used in expressions.
 
 ```thrust
 fn main() s32 @public {
-    var yellow_plus_red: u32 = Colors->Yellow + Colors->Red;
+    var yellow_plus_red: u32 = Colors=>Yellow + Colors=>Red;
     return 0;
 }
+```
+
+Enums can be declared at the top level or inside a function body. Imported enum variants keep their qualified module path before the enum name.
+
+```thrust
+var color: u32 = palette::Colors=>Yellow;
 ```
 
 This syntax is **stable**.

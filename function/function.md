@@ -20,7 +20,7 @@ fn do_nothing() {}
 
 ## Prototypes
 
-A function can be declared without a body, ending in ``;``. This is how external and forward declarations are written.
+A function can be declared without a body, ending in ``;``. This is how external and forward declarations are written. A prototype without a body normally represents an external function and should use ``@extern``.
 
 ```thrust
 fn printf(fmt: const array[char]) s32 @arbitraryArgs @extern("printf") @convention("C");
@@ -53,3 +53,17 @@ fn my_printf(fmt: const array[char]) s32 @public @arbitraryArgs {
 ```
 
 Functions are **stable**. Named arguments and variadic functions are part of the stable syntax.
+
+Named arguments are not supported for variadic functions, compiler intrinsics, assembler functions, or anonymous function calls.
+
+Functions can be generic. Generic arguments are written before call arguments and can often be inferred from the values passed to the function.
+
+```thrust
+fn identity[T](value: T) T {
+    return value;
+}
+
+var input: u32 = 10;
+var x: u32 = identity(input);
+var y: u32 = identity[u32](10);
+```

@@ -20,4 +20,20 @@ for {
 }
 ```
 
+The semicolon-only form also creates an infinite loop and accepts a block or a single statement body.
+
+```thrust
+for ;;; {
+    // infinite loop
+}
+
+for ;;; break;
+```
+
+A full ``for`` can also use a single statement body.
+
+```thrust
+for var i: u32 = 0; i < 10; i++; total += i;
+```
+
 This syntax is **stable**.

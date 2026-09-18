@@ -21,15 +21,26 @@ A local can also carry a modificator that changes how the compiler and the hardw
 
 - ``volatile`` Reads and writes always reach memory, never a cache or a register copy.
 - ``lazyThread`` Holds thread-local storage that is created on first use.
-- ``atomicNone``, ``atomicFree``, ``atomicRelax``, ``atomicGrab``, ``atomicDrop``, ``atomicSync``, ``atomicStrict`` Atomic memory ordering levels.
+- ``atomicNone``, ``atomicFree``, ``atomicRelax``, ``atomicGrab``, ``atomicDrop`` Atomic memory ordering levels.
 - ``threadInit``, ``threadDyn``, ``threadExec``, ``threadLDyn`` Thread storage modes.
 
 ```thrust
 var volatile flag: bool = false;
-var atomic counter: u32 = 0;
 var atomicRelax balance: f64 = 0.0;
 var lazyThread cache: u32 = 0;
 var threadInit worker: u32 = 0;
 ```
+
+The short form still uses the ``:`` token: ``var name := value`` is parsed as a declaration whose type is inferred from ``value``.
+
+Locals can carry attributes before or after the explicit type. The attributes commonly used on locals are ``@heap``, ``@dealloc``, ``@dealloc(function)``, and ``@align(N)``.
+
+```thrust
+var buffer @dealloc: ptr[u8] = allocate();
+var raw: ptr @dealloc(mem::freeMemory) = mem::allocateMemory(64);
+```
+
+> [!NOTE]
+> ``atomicSync`` and ``atomicStrict`` are reserved by the lexer, but they are not currently accepted by the statement-modificator parser.
 
 This syntax is **stable**.

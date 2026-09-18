@@ -17,10 +17,12 @@ while c != 100_000 {
 A ``while`` can also carry a local declaration, written before the condition. The local lives only inside the loop.
 
 ```thrust
-while var i: u32 = 0; i < 100 {
+while var i: u32 = 0; i < 100; {
     // loop body
     i++;
 }
 ```
+
+A normal ``while`` requires a block body. The ``while var`` form can use either a block or a single statement after the condition.
 
 This syntax is **stable**.

@@ -28,6 +28,13 @@ if result >= 0 {
 }
 ```
 
+Branches can hold either a block or a single statement.
+
+```thrust
+if value == 0 return 0;
+else return 1;
+```
+
 The logical words ``and`` and ``or`` work as alternatives to the ``&&`` and ``||`` operators, and they combine in the same condition.
 
 ```thrust

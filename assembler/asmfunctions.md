@@ -29,11 +29,19 @@ fn main() s32 @public {
 Assembler functions accept parameters, a return type, and attributes, like normal functions.
 
 ```thrust
-asmfn add(a: u32, b: u32) u32 @public @asmSyntax("Intel") {
+asmfn add(a u32, b u32) u32 @public @asmSyntax("Intel") {
     "mov %eax, $0"
 } {
     "=r"
 }
+```
+
+Unlike normal ``fn`` declarations, the current ``asmfn`` parser expects assembler parameters as ``name Type`` without a colon. This is unstable and may change.
+
+Global assembler is written at the top level with ``global_asm``.
+
+```thrust
+global_asm(".globl symbol");
 ```
 
 ## LLVM inline assembler

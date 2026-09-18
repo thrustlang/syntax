@@ -22,6 +22,23 @@ Statics accept attributes, such as ``@public`` to keep the name in the output or
 static mut depth: u16 @public @extern("depth") = 3;
 ```
 
+Top-level statics can also use ``@linkage("kind")`` and ``@align(N)``. An external static must also be public.
+
+Statics accept the same statement modificators as globals and locals where they are meaningful:
+
+- ``volatile`` Forces memory-visible reads and writes.
+- ``lazyThread`` Uses lazy thread-local storage.
+- ``atomicNone``, ``atomicFree``, ``atomicRelax``, ``atomicGrab``, ``atomicDrop`` Select an atomic ordering.
+- ``threadInit``, ``threadDyn``, ``threadExec``, ``threadLDyn`` Select a thread-local storage model.
+
+```thrust
+static mut volatile flag: bool = false;
+static mut threadInit counter: u32 @public @align(8) = 0;
+```
+
+> [!NOTE]
+> ``atomicSync`` and ``atomicStrict`` are reserved by the lexer, but they are not currently accepted by the statement-modificator parser.
+
 A static without an initialization keeps whatever the memory holds at load time.
 
 This syntax is **stable**.

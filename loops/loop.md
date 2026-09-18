@@ -12,4 +12,10 @@ loop {
 }
 ```
 
+The body can also be a single statement.
+
+```thrust
+loop break;
+```
+
 This syntax is **stable**.

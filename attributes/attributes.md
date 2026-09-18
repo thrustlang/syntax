@@ -12,7 +12,8 @@ This page separates the attributes into **stable** and **unstable**. The unstabl
 
 ### Visibility
 
-- ``@public`` Keeps the plain name of the structure in the output. Without it, functions and constants get an obfuscated name.
+- ``@public`` Keeps the plain name of a function, intrinsic, static, constant, struct, enum, or type alias in the output. Without it, exported symbols can get an obfuscated name.
+- ``@entrypoint`` Marks an entry-point candidate. It is recognized by the lexer and attribute parser, but its final semantics are still implementation-defined.
 
 ```thrust
 fn main() s32 @public {
@@ -24,9 +25,9 @@ fn main() s32 @public {
 
 - ``@heap`` Allocates the value on the heap.
 - ``@dealloc`` On a local variable, schedules automatic deallocation at scope exit. On a function, use ``@deallocator`` instead.
-- ``@dealloc(function)`` On a local variable, schedules a specific cleanup function at scope exit.
+- ``@dealloc(function)`` or ``@dealloc(module::function)`` On a local variable, schedules a specific cleanup function at scope exit.
 - ``@deallocator`` Marks a function as the deallocator for the type of its single pointer parameter.
-- ``@align(N)`` Sets the alignment of the value to ``N``.
+- ``@align(N)`` Sets the alignment of the value to ``N``. The compiler expects a literal unsigned integer. The semantic checker accepts power-of-two alignments up to ``128``.
 - ``@packed`` Uses a packed layout for a struct, without padding.
 
 ```thrust
@@ -64,10 +65,12 @@ fn main() s32 @public {
 
 ### Symbols and calling
 
-- ``@extern("name")`` Binds the function to the external symbol ``name``. See ``function/ffi.md``.
-- ``@linkage("kind")`` Sets the linkage kind, for example ``"internal"``, ``"weak"``, or ``"common"``.
+- ``@extern("name")`` Binds a function, static, or constant to the external symbol ``name``. External symbols must also be public. See ``function/ffi.md``.
+- ``@linkage("kind")`` Sets the linkage kind. Accepted names are ``"standard"``, ``"common"``, ``"dllimport"``, ``"dllexport"``, ``"externweak"``, ``"weak"``, ``"internal"``, ``"linkerprivate"``, and ``"linkerprivateweak"``.
 - ``@convention("name")`` Sets the calling convention. See the list below.
 - ``@arbitraryArgs`` Marks a function as variadic. See ``function/function.md``.
+
+Variadic prototypes without a body normally represent external functions and therefore use ``@extern``. Named arguments are not supported on calls to variadic functions.
 
 ### Compile-time conditionals
 
@@ -75,7 +78,7 @@ fn main() s32 @public {
 
 ## Unstable attributes
 
-- ``@promote`` Promotes a value between two types.
+- ``@promote(T -> U, ...)`` Promotes variadic argument types before a call is lowered.
 - ``@asmAlignStack`` Aligns the stack for an assembler block.
 - ``@asmSyntax("Intel" | "AT&T")`` Chooses the inline assembler syntax.
 - ``@asmThrowErrors`` Lets assembler errors propagate.
@@ -98,7 +101,11 @@ The ``@convention`` attribute accepts a wide set of names. The common ones:
 - ``"Erlang"`` The High-Performance Erlang Compiler convention.
 - ``"Win64"`` The Windows x64 convention.
 
-The full accepted list also includes ``X86StdCall``, ``X86FastCall``, ``X86ThisCall``, ``X86VectorCall``, ``X86RegCall``, ``X86_64_SysV``, ``ARMAPCS``, ``ARMAAPCS``, ``AArch64VectorCall``, ``AArch64SVEVectorCall``, ``SwiftTail``, ``PreserveNone``, ``AnyReg``, ``PTXKernel``, ``PTXDevice``, ``AMDGPUKernel``, ``AMDGPUGfx``, ``RISCVVectorCall``, ``WebAssembly``, and many target-specific names.
+The full accepted list also includes ``GraalVM``, ``X86StdCall``, ``X86FastCall``, ``X86ThisCall``, ``X86VectorCall``, ``X86RegCall``, ``X86_64_SysV``, ``ARMAPCS``, ``ARMAAPCS``, ``ARM_AAPCS_VFP``, ``AArch64VectorCall``, ``AArch64SVEVectorCall``, ``SwiftTail``, ``PreserveNone``, ``AnyReg``, ``PTXKernel``, ``PTXDevice``, ``AMDGPUKernel``, ``AMDGPUGfx``, ``RISCVVectorCall``, ``CPPFastTLS``, ``CFGuardCheck``, ``MSP430_INTR``, ``SPIRFunc``, ``SPIRKernel``, ``Intel_OCL_BI``, ``X86_INTR``, ``AVR_INTR``, ``AVR_SIGNAL``, ``AVR_BUILTIN``, ``AMDGPU_VS``, ``AMDGPU_GS``, ``AMDGPU_PS``, ``AMDGPU_CS``, ``AMDGPU_HS``, ``MSP430_BUILTIN``, ``AMDGPU_LS``, ``AMDGPU_ES``, ``WebAssembly``, ``M68k_INTR``, ``M68k_RTD``, ``ARM64ECThunkX64``, ``ARM64ECThunkNative``, ``AMDGPUCSChain``, ``AMDGPUCSChainPreserve``, ``AMDGPU_Gfx_WholeWave``, ``CHERIoT_CompartmentCall``, ``CHERIoTCompartmentCallee``, ``CHERIoTLibraryCall``, and the ``RISCV_VLSCall_*`` and ``AArch64SMEABISupportRoutines*`` target-specific names.
+
+## Attribute parsing notes
+
+Attributes are parsed in declaration-specific positions. Repeating the same semantic attribute on one item is rejected by the attribute checker.
 
 ```thrust
 fn f(a: u32, b: u32) u32 @convention("C") @public {

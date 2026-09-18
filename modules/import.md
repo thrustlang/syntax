@@ -45,6 +45,12 @@ The ``only`` keyword brings in just the listed symbols.
 import "other.thrust" only { stack, counter };
 ```
 
+The ``only`` list can be combined with an alias. In this form the compiler synthesizes non-qualified access through the alias path.
+
+```thrust
+import "other.thrust" only { stack, counter } as dep;
+```
+
 ## Qualified module paths
 
 Modules can be imported with their qualified path, and symbols are reached the same way.
@@ -92,5 +98,4 @@ To see more examples you can take a look in 'https://github.com/thrustlang/thrus
 ## C imports
 
 > [!NOTE]
-> ``importC`` is still **in development**. It is unstable and not yet available.
-
+> ``importC`` is still **in development**. It is recognized in unstable mode and has partial parser support, but it is not yet part of the stable top-level import surface.

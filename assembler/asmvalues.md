@@ -21,14 +21,14 @@ fn main() s32 @public {
 }
 ```
 
-Assembler values can take arguments inside parentheses after the type, separated by ``:``.
+Assembler values can take attributes after the type and before the argument list or assembler block. They can also take arguments inside parentheses after the type, separated by ``:``.
 
 ```thrust
 fn main() s32 @public {
     var a: u32 = 2;
     var b: u32 = 3;
 
-    var result: u32 = asm u32(a : b) {
+    var result: u32 = asm u32 @asmSyntax("Intel") (a : b) {
         "mov $1, %eax",
         "add $2, %eax"
     } {
@@ -40,6 +40,9 @@ fn main() s32 @public {
     return 0;
 }
 ```
+
+> [!NOTE]
+> The current parser has an implementation discrepancy around null-terminated and non-null-terminated string tokens in assembler constraints. Treat this syntax as unstable and prefer normal string literals until the parser behavior is finalized.
 
 ## LLVM inline assembler
 

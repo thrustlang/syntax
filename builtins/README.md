@@ -111,6 +111,10 @@ The machine running the compiler reports information through these builtins:
 
 - ``hostOsName()``, ``hostArch()``, ``hostEndian()`` Return the host operating system, architecture, and endianness as constant strings.
 - ``currentTimestamp()`` Returns the current timestamp, as ``usize``.
+- ``processorCount()`` Returns the number of host processors visible to the compiler, as ``usize``.
+- ``pageSize()`` Returns the host memory page size, as ``usize``.
+- ``cpuCacheLineSize()`` Returns the host CPU cache line size, as ``usize``.
+- ``hostName()`` Returns the host name as a constant string.
 
 ## Token builtins
 
@@ -122,15 +126,15 @@ These names are reserved words. The compiler translates them directly to LLVM op
 var p: ptr[u32] = halloc(u32);
 ```
 
-- ``memcpy(dst, src, size)`` Copies a memory block. Returns ``ptr``.
-- ``memmove(dst, src, size)`` Moves a memory block. Returns ``ptr``.
+- ``memcpy(src, dst, size)`` Copies a memory block from ``src`` into ``dst``. Returns ``ptr``.
+- ``memmove(src, dst, size)`` Moves a memory block from ``src`` into ``dst``. Returns ``ptr``.
 - ``memset(dst, value, size)`` Fills a memory block with a byte value. Returns ``ptr``.
 
 ```thrust
 var a: ptr[u32] = halloc(u32);
 var b: ptr[u32] = halloc(u32);
 
-memcpy(b as ptr, a as ptr, sizeOf(u32));
+memcpy(a as ptr, b as ptr, sizeOf(u32));
 ```
 
 - ``abiSizeOf(Type)`` Returns the size in bytes as the ABI defines it, as ``u64``.
@@ -150,4 +154,9 @@ fn print(fmt: const array[char]) s32 @public @arbitraryArgs @extern("printf") @c
 
 ## Builtin type
 
-- ``CString`` is a builtin alias for ``array[char]``, the null-terminated string type. You can write ``const array[char]`` or ``CString`` to mean the same thing.
+- ``CString`` is a builtin alias for ``array[char]``. String literals are constant string values; use ``const array[char]`` when the value must be viewed as immutable.
+
+Normal string literals, written ``"text"``, are null-terminated. Non-null-terminated string literals are written ``n#"text"``.
+
+> [!NOTE]
+> ``isSameType(A, B)`` compares types after removing ``const`` wrappers, so it checks practical type equivalence rather than strict spelling identity.

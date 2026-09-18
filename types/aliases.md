@@ -9,9 +9,10 @@ A type alias gives a name to an existing type. It does not create a new type, it
 ```thrust
 type Depth @public = u16;
 type Pair = array[u32; 2];
+type Identity[T] = T;
 ```
 
-Aliases can be exported to other modules with ``@public``, and then imported and used as any other type.
+Aliases can be exported to other modules with ``@public``, and then imported and used as any other type. Type aliases can be declared at the top level or inside a function body.
 
 ```thrust
 // other.thrust
@@ -23,6 +24,17 @@ import "other.thrust";
 fn main() s32 @public {
     var depth: other::Depth = 7;
     return depth as s32;
+}
+```
+
+Aliases can be generic. Type arguments are written in brackets at the use site.
+
+```thrust
+type Box[T] = ptr[T];
+
+fn main() s32 @public {
+    var p: Box[u64] = nullptr;
+    return 0;
 }
 ```
 
