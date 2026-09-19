@@ -56,9 +56,6 @@ fn main() s32 @public {
 }
 ```
 
-> [!NOTE]
-> The parser validates field names in constructors. Current code generation still initializes fields by constructor order, so write constructor fields in declaration order until this is fully resolved.
-
 Fields are read and written with the dot operator.
 
 ```thrust

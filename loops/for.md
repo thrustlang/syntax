@@ -14,6 +14,24 @@ for var i: u32 = 0; i < 1000; i++; {
 
 Notice the action ends with ``;`` before the block opens. Without the declaration part, ``for`` also works as an infinite loop, like ``loop``.
 
+The action accepts expressions and statements. Simple statements keep their trailing ``;``. Compound statements, such as blocks and conditionals, are followed directly by the loop body.
+
+```thrust
+for var i: u32 = 0; i < 10; {
+    i += 1;
+} {
+    // loop body
+}
+
+for var i: u32 = 0; i < 10; if i == 5 {
+    i += 2;
+} else {
+    i += 1;
+} {
+    // loop body
+}
+```
+
 ```thrust
 for {
     // infinite loop
