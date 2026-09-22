@@ -47,6 +47,7 @@ The lexer reserves these unstable keywords when unstable mode is enabled: ``asmf
 ## Content
 
 - ``assembler/`` Information about pure assembler-type functions and assembler values treated as conventional expressions. Unstable.
+- ``atomics/`` Atomic read-modify-write operations and compare-and-swap. Unstable.
 - ``attributes/`` Attributes are compile-time code generation modifiers that can change the behavior of code.
 - ``builtins/`` Built-in functions that are part of the compiler and the language.
 - ``cast/`` Compile-time type transformation.
