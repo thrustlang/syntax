@@ -61,4 +61,5 @@ The lexer reserves these unstable keywords when unstable mode is enabled: ``asmf
 - ``structure/`` Traditional structures.
 - ``generics/`` Generics types.
 - ``types/`` Native and primitive types of the language, and type aliases.
+- ``variadic/`` Variadic functions, their argument list builtins, and the hidden argument count. Stable.
 - ``variables/`` Types of variables, their mutation, and statics.

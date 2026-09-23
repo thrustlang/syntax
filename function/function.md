@@ -52,6 +52,8 @@ fn my_printf(fmt: const array[char]) s32 @public @arbitraryArgs {
 }
 ```
 
+A variadic function defined in Thrust carries a hidden argument count that ``arbitraryArgsCount()`` reads. Functions that forward ``arbitraryArgs()`` to an FFI variadic (such as ``vprintf``) add ``@noArgCount`` to keep a C-compatible ABI. See ``variadic/variadic.md`` for the full argument list builtins and the ``@noArgCount`` attribute.
+
 Functions are **stable**. Named arguments and variadic functions are part of the stable syntax.
 
 Named arguments are not supported for variadic functions, compiler intrinsics, assembler functions, or anonymous function calls.

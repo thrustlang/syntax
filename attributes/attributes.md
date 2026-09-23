@@ -69,8 +69,9 @@ fn main() s32 @public {
 - ``@linkage("kind")`` Sets the linkage kind. Accepted names are ``"standard"``, ``"common"``, ``"dllimport"``, ``"dllexport"``, ``"externweak"``, ``"weak"``, ``"internal"``, ``"linkerprivate"``, and ``"linkerprivateweak"``.
 - ``@convention("name")`` Sets the calling convention. See the list below.
 - ``@arbitraryArgs`` Marks a function as variadic. See ``function/function.md``.
+- ``@noArgCount`` Opts a variadic function out of the hidden argument count. Variadic functions declared by the user carry a hidden count of the extra arguments passed at the call site, so the body can query it with ``arbitraryArgsCount()``. Functions that forward ``arbitraryArgs()`` to an FFI variadic (such as the ``vprintf`` family) must add ``@noArgCount`` to keep a C-compatible ABI. See ``variadic/variadic.md``.
 
-Variadic prototypes without a body normally represent external functions and therefore use ``@extern``. Named arguments are not supported on calls to variadic functions.
+Variadic prototypes without a body normally represent external functions and therefore use ``@extern``. Named arguments are not supported on calls to variadic functions. A variadic function that does not carry ``@noArgCount`` emits the ``W0033`` warning, which is always active.
 
 ### Compile-time conditionals
 
