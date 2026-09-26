@@ -50,4 +50,4 @@ The syntax inside the assembler strings follows the LLVM inline assembler format
 
 <img src= "assets/LLVM-inline-assembler-ref.png" alt= "llvm-inline-assembler-ref" style= "width: 50%; height: 50%;"> </img>
 
-Related unstable attributes: ``@asmSyntax("Intel" | "AT&T")``, ``@asmAlignStack``, ``@asmThrowErrors``, ``@asmSideEffects``.
+Related unstable attributes: ``@asmSyntax("Intel" | "AT&T")``, ``@asmAlignStack``, ``@asmThrow``, ``@asmEffects``.

@@ -23,6 +23,7 @@ fn main() s32 @public {
 
 ### Memory and layout
 
+- ``@stack`` Allocates the value on the stack.
 - ``@heap`` Allocates the value on the heap.
 - ``@dealloc`` On a local variable, schedules automatic deallocation at scope exit. On a function, use ``@deallocator`` instead.
 - ``@dealloc(function)`` or ``@dealloc(module::function)`` On a local variable, schedules a specific cleanup function at scope exit.
@@ -82,8 +83,8 @@ Variadic prototypes without a body normally represent external functions and the
 - ``@promote(T -> U, ...)`` Promotes variadic argument types before a call is lowered.
 - ``@asmAlignStack`` Aligns the stack for an assembler block.
 - ``@asmSyntax("Intel" | "AT&T")`` Chooses the inline assembler syntax.
-- ``@asmThrowErrors`` Lets assembler errors propagate.
-- ``@asmSideEffects`` Tells the backend the assembler block has side effects.
+- ``@asmThrow`` Lets assembler errors propagate.
+- ``@asmEffects`` Tells the backend the assembler block has side effects.
 
 These apply to the assembler constructs in ``assembler/``, which are also unstable.
 
