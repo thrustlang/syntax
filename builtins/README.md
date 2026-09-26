@@ -92,10 +92,10 @@ if isPointer(ptr[u32]) == false { return 2; }
 The compiler targets a machine described by its target triple. These builtins report about it:
 
 - ``targetOS()``, ``targetArch()``, ``targetVendor()``, ``targetAbi()``, ``targetTriple()`` Return constant strings.
-- ``isLinux()``, ``isWindows()``, ``isDarwin()``, ``isApple()``, ``isAix()`` Return whether the target runs on that platform.
+- ``isUnix()``, ``isLinux()``, ``isWindows()``, ``isDarwin()``, ``isApple()``, ``isAix()``, ``isBSD()``, ``isFreeBSD()``, ``isNetBSD()``, ``isOpenBSD()``, ``isAndroid()``, ``isIOS()``, ``isSolaris()``, ``isHaiku()`` Return whether the target runs on that platform or OS family. ``isUnix()`` is true for any Unix-like target (Linux, Darwin/macOS, BSDs, Solaris/Illumos, AIX, Haiku).
 - ``is64Bit()``, ``is32Bit()`` Return the pointer width.
 - ``isBigEndian()``, ``isLittleEndian()`` Return the endianness.
-- ``isX86()``, ``isX8664()``, ``isArm()``, ``isAarch64()``, ``isRiscv64()``, ``isPpc()``, ``isPpc64()``, ``isMips64()``, ``isSystemz()``, ``isLoongarch64()``, ``isWasm()`` Return the target architecture.
+- ``isX86()``, ``isX8664()``, ``isArm()``, ``isAarch64()``, ``isRiscv64()``, ``isPpc()``, ``isPpc64()``, ``isMips64()``, ``isSystemz()``, ``isLoongarch64()``, ``isWasm()``, ``isWasm32()``, ``isWasm64()`` Return the target architecture.
 - ``isElf()``, ``isMachO()``, ``isCoff()`` Return the object file format.
 - ``hasPosixThreads()``, ``hasSysvAbi()`` Return platform capabilities.
 - ``pointerWidth()``, ``isizeWidth()``, ``usizeWidth()`` Return the width in bits of ``ptr``, ``ssize``, and ``usize``, as ``usize``.

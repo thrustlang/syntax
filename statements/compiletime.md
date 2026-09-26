@@ -6,7 +6,7 @@
 
 The ``@if``, ``@elif``, and ``@else`` attributes pick code at compile time. The condition must fold to a constant boolean, and the branch that is not taken is dropped before code generation. This is how the same source can adapt to the target platform.
 
-The condition can use the target builtins from ``builtins/README.md``, such as ``isLinux()`` or ``is64Bit()``.
+The condition can use the target builtins from ``builtins/README.md``, such as ``isUnix()``, ``isLinux()`` or ``is64Bit()``.
 
 ## Inside a function
 
@@ -53,6 +53,13 @@ Compile-time conditionals also work at the top level, selecting between function
 @if(isLinux()) const PLATFORM: u32 = 2;
 @elif(isWindows()) const PLATFORM: u32 = 1;
 @else const PLATFORM: u32 = 3;
+```
+
+The ``isUnix()`` predicate covers every Unix-like target at once, so a single branch can target Linux, macOS, the BSDs, Solaris/Illumos, AIX and Haiku without listing each one:
+
+```thrust
+@if(isUnix()) const SYSTEM: u32 = 0;
+@elif(isWindows()) const SYSTEM: u32 = 1;
 ```
 
 The compiler only type-checks the branch that stays. A branch that will be dropped can contain code that would not compile on its own.
