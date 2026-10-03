@@ -79,11 +79,11 @@ static buffer: array[u8; N * 2];
 var samples: array[f64; N + 2];
 ```
 
-## Native vector type
+## Native LLVM vector type
 
 - ``NativeVector[T; N]`` A fixed LLVM IR vector with ``N`` elements of type ``T``.
 
-``NativeVector`` lowers directly to vector For example, ``NativeVector[f32; 4]`` lowers to ``<4 x float>``. It is intended for LLVM intrinsics and native SIMD-oriented IR. It is not the same as ``array[T; N]``, which lowers to an LLVM array.
+``NativeVector`` lowers directly to LLVM vector IR. For example, ``NativeVector[f32; 4]`` lowers to ``<4 x float>``. It is intended for LLVM intrinsics and native SIMD-oriented IR. It is not the same as ``array[T; N]``, which lowers to an LLVM array.
 
 Native vector values are built with ``native``:
 
