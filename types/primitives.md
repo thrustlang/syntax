@@ -79,6 +79,18 @@ static buffer: array[u8; N * 2];
 var samples: array[f64; N + 2];
 ```
 
+## Native LLVM vector type
+
+- ``NativeVector[T; N]`` A fixed LLVM IR vector with ``N`` elements of type ``T``.
+
+``NativeVector`` lowers directly to LLVM vector IR. For example, ``NativeVector[f32; 4]`` lowers to ``<4 x float>``. It is intended for LLVM intrinsics and native SIMD-oriented IR. It is not the same as ``array[T; N]``, which lowers to an LLVM array.
+
+Native vector values are built with ``native``:
+
+```thrust
+var vector: NativeVector[f32; 4] = native[1.0, 2.0, 3.0, 4.0];
+```
+
 ## Function type
 
 - ``Fn[param, ...] @attrs -> ret`` A reference to a function that takes the given parameter types and returns ``ret``. The ``@arbitraryArgs`` attribute marks it variadic.
@@ -100,6 +112,7 @@ fn main() s32 @public {
 
     var pointer: ptr[u32] = nullptr;
     var values: array[s32; 3] = fixed[1, 2, 3];
+    var vector: NativeVector[f32; 4] = native[1.0, 2.0, 3.0, 4.0];
 
     if isFunction(Fn[s32, s32] -> s32) == false { return 1; }
     if isFixedArray(values) == false { return 2; }
