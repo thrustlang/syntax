@@ -81,6 +81,9 @@ var samples: array[f64; N + 2];
 
 ## Native LLVM vector type
 
+> [!WARNING]
+> This syntax is **unstable**. It only works when the compiler runs in unstable mode, and it can change or disappear. In stable mode, using ``NativeVector`` or ``native[...]`` reports ``E0001`` with the help ``You must pass '-mode unstable' to access it.``
+
 - ``NativeVector[T; N]`` A fixed LLVM IR vector with ``N`` elements of type ``T``.
 
 ``NativeVector`` lowers directly to LLVM vector IR. For example, ``NativeVector[f32; 4]`` lowers to ``<4 x float>``. It is intended for LLVM intrinsics and native SIMD-oriented IR. It is not the same as ``array[T; N]``, which lowers to an LLVM array.
@@ -90,6 +93,24 @@ Native vector values are built with ``native``:
 ```thrust
 var vector: NativeVector[f32; 4] = native[1.0, 2.0, 3.0, 4.0];
 ```
+
+Native vectors support element-wise operations:
+
+- Arithmetic: ``+``, ``-``, ``*``, ``/``, ``%``.
+- Bitwise: ``&``, ``|``, ``^`` on integer and boolean vectors.
+- Shifts: ``<<`` and ``>>`` on integer vectors.
+- Compound assignment: ``+=``, ``-=``, ``*=``, ``/=``, ``%=``, ``&=``, ``|=``, ``^=``, ``<<=``, ``>>=``.
+- Unary: ``-`` on numeric vectors, ``~`` on integer vectors, ``!`` on boolean vectors.
+- Comparisons: ``==``, ``!=``, ``<``, ``<=``, ``>``, ``>=``.
+- Logical gates: ``&&`` and ``||`` on boolean vectors.
+
+Vector-vector operations require the same element type and element count. Vector-scalar operations replicate the scalar across all lanes after converting it to the element type.
+
+Comparisons return a scalar ``bool``. ``==`` requires every lane to be equal, ``!=`` is true when any lane differs, and ``<``, ``<=``, ``>``, ``>=`` require every lane to satisfy the comparison. ``&&`` and ``||`` also reduce to a scalar ``bool``: AND requires every lane of both vectors to be true, and OR requires at least one lane pair to be true.
+
+A boolean vector ``!`` is applied lane by lane and returns another boolean vector.
+
+The same operations are available in ``const`` and ``static`` initializers when all operands are constant.
 
 ## Function type
 

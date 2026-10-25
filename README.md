@@ -14,7 +14,7 @@ This repository holds detailed and general information about the syntax of the *
 The compiler has two feature modes:
 
 - **Stable.** The syntax is recognized in the default mode. It is considered final, subject only to bug fixes. Keep in mind that the compiler is still maturing, so even stable syntax can hit issues in edge cases.
-- **Unstable.** The syntax is only recognized when the compiler runs in unstable mode. It is experimental, can change, and can be removed at any time. Assembler constructs (``asmfn``, ``asm``, ``global_asm``), ``embedded``, ``importC``, and the ``@asm*`` and ``@promote`` attributes are unstable. ``importC`` is still in development.
+- **Unstable.** The syntax is only recognized when the compiler runs in unstable mode. It is experimental, can change, and can be removed at any time. Assembler constructs (``asm fn``, ``asm``, ``global_asm``, ``#asm{...}``), ``NativeVector``/``native[...]``, ``embedded``, ``importC``, and the ``@asm*`` and ``@promote`` attributes are unstable. ``importC`` is still in development.
 
 Each page in this repository marks what it documents as stable or unstable.
 
@@ -33,13 +33,13 @@ The compiler recognizes these stable top-level declarations:
 - ``directive`` Compiler directives.
 - ``@if`` / ``@elif`` / ``@else`` Compile-time conditional declarations.
 
-The unstable top-level declarations are ``asmfn``, ``global_asm``, ``embedded``, and ``importC``. The ``asm`` expression is also unstable.
+The unstable top-level declarations are ``asm fn``, ``global_asm``, ``embedded``, and ``importC``. The ``asm`` expression and the ``NativeVector`` type with its ``native[...]`` constructor are also unstable.
 
 Stable statement forms include blocks, ``return``, local ``static``, local ``const``, local ``struct``, local ``type``, local ``enum``, ``var``, ``if`` / ``elif`` / ``else``, ``@if`` / ``@elif`` / ``@else``, ``for``, ``while``, ``loop``, ``continue``, ``continueall``, ``break``, ``breakall``, ``defer``, and expression statements.
 
 The lexer reserves these stable keywords and literals: ``var``, ``fn``, ``if``, ``elif``, ``else``, ``for``, ``while``, ``loop``, ``true``, ``false``, ``or``, ``and``, ``const``, ``struct``, ``return``, ``break``, ``continue``, ``breakall``, ``continueall``, ``defer``, ``pass``, ``nullptr``, ``as``, ``deref``, ``type``, ``enum``, ``alloc``, ``address``, ``addr``, ``load``, ``write``, ``fixed``, ``ref``, ``mut``, ``static``, ``unreachable``, ``intrinsic``, ``new``, ``import``, ``only``, and ``directive``.
 
-The lexer reserves these unstable keywords when unstable mode is enabled: ``asmfn``, ``asm``, ``global_asm``, ``embedded``, and ``importC``.
+The lexer reserves these unstable keywords and types when unstable mode is enabled: ``asm``, ``global_asm``, ``native``, ``NativeVector``, ``embedded``, and ``importC``. The ``#asm{...}`` raw block is also tokenized only in unstable mode. Using any of them in stable mode reports ``E0001`` with the help ``You must pass '-mode unstable' to access it.``
 
 > [!NOTE]
 > ``alloc``, ``address``, ``addr``, and ``write`` are reserved by the lexer, but their user-facing syntax is not fully specified yet.

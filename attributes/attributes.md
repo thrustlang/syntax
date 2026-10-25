@@ -84,7 +84,7 @@ Variadic prototypes without a body normally represent external functions and the
 - ``@asmAlignStack`` Aligns the stack for an assembler block.
 - ``@asmSyntax("Intel" | "AT&T")`` Chooses the inline assembler syntax.
 - ``@asmThrow`` Lets assembler errors propagate.
-- ``@asmEffects`` Tells the backend the assembler block has side effects.
+- ``@asmSideEffects`` Tells the backend the assembler block has side effects.
 
 These apply to the assembler constructs in ``assembler/``, which are also unstable.
 

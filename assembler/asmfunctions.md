@@ -9,45 +9,50 @@ Assembler functions are functions written entirely in inline assembler. They sup
 > [!WARNING]
 > This syntax is **unstable**. It only works when the compiler runs in unstable mode, and it can change or disappear.
 
-The body has two blocks. The first block holds the assembler lines, each as a null-terminated string. The second block holds the constraints.
+Assembler functions declare the parameter types inside parentheses and always declare a return type, including ``void``. The body is a raw ``#asm{...}`` block.
 
 ```thrust
-asmfn invoke_exit_syscall() void {
-    "mov $$60, %rax",
-    "mov $$1, %rdi",
-    "syscall"
-} {
-    "~{rax}~{rdi}"
+asm fn add(s32, s32) s32 @public @asmSyntax("Intel") #asm{
+    mov $0, $1,
+    add $0, $2
 }
 
 fn main() s32 @public {
-    invoke_exit_syscall();
-    return 0;
+    return add(20, 22);
 }
 ```
 
-Assembler functions accept parameters, a return type, and attributes, like normal functions.
+The raw block contains one assembler instruction per line. A trailing comma at the end of an instruction is removed by the lexer; commas between operands are preserved. The trailing comma on the last instruction is optional.
+
+LLVM operand placeholders are numbered in constraint order:
+
+- ``$0`` is the return value when the return type is not ``void``.
+- The parameters start at ``$1`` when there is a return value.
+- When the return type is ``void``, the parameters start at ``$0``.
+
+The constraints are inferred from the signature. Non-void returns use ``=r`` (or ``=x`` for floating point), and parameters use ``r`` (or ``x`` for floating point). A trailing ``ret`` or ``retq`` instruction is ignored, because the compiler emits the function return after the inline assembler block.
+
+Void assembler functions are allowed:
 
 ```thrust
-asmfn add(a u32, b u32) u32 @public @asmSyntax("Intel") {
-    "mov %eax, $0"
-} {
-    "=r"
+asm fn touch() void @public #asm{
+    nop
 }
 ```
 
-Unlike normal ``fn`` declarations, the current ``asmfn`` parser expects assembler parameters as ``name Type`` without a colon. This is unstable and may change.
-
-Global assembler is written at the top level with ``global_asm``.
+Global assembler also uses a raw block:
 
 ```thrust
-global_asm(".globl symbol");
+global_asm #asm{
+    .globl symbol,
+    symbol:
+}
 ```
 
 ## LLVM inline assembler
 
-The syntax inside the assembler strings follows the LLVM inline assembler format. For more information, see the LLVM language reference: <https://llvm.org/docs/LangRef.html>
+The syntax inside the assembler block follows the LLVM inline assembler format. For more information, see the LLVM language reference: <https://llvm.org/docs/LangRef.html>
 
 <img src= "assets/LLVM-inline-assembler-ref.png" alt= "llvm-inline-assembler-ref" style= "width: 50%; height: 50%;"> </img>
 
-Related unstable attributes: ``@asmSyntax("Intel" | "AT&T")``, ``@asmAlignStack``, ``@asmThrow``, ``@asmEffects``.
+Related unstable attributes: ``@asmSyntax("Intel" | "AT&T")``, ``@asmAlignStack``, ``@asmThrow``, ``@asmSideEffects``.
