@@ -57,6 +57,8 @@ Normal string literals, written ``"text"``, are null-terminated. Non-null-termin
 
 Pointers can nest, for example ``ptr[ptr[u8]]``. The ``nullptr`` literal is the null value of any pointer type.
 
+Pointer values support ``==`` and ``!=``. The comparison uses the pointer value. Ordering comparisons such as ``<`` and ``>`` are not defined for pointers. Casting an array or ``CString`` to a pointer follows the rules in ``spec/cast/casts.md``; compare the resulting pointer when you need pointer identity.
+
 ## Array type
 
 - ``array[T]`` An array of ``T`` with a size known at runtime.
