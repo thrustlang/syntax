@@ -64,19 +64,6 @@ fn main() s32 @public {
 - ``@constructor`` Runs the function at load time.
 - ``@destructor`` Runs the function at unload time.
 
-### SIMD
-
-- ``@simd`` Marks a function or compiler intrinsic as SIMD code. On x86 and x86_64, the compiler requires an explicit ``-cpu-features`` list when SIMD code is present. The attribute is a compiler marker and does not become an LLVM attribute.
-
-```thrust
-fn addPs256(
-    left: NativeVector[f32; 8],
-    right: NativeVector[f32; 8]
-) NativeVector[f32; 8] @public @simd {
-    return rawAddPs256(left, right);
-}
-```
-
 ### Symbols and calling
 
 - ``@extern("name")`` Binds a function, static, or constant to the external symbol ``name``. External symbols must also be public. See ``function/ffi.md``.
@@ -93,13 +80,23 @@ Variadic prototypes without a body normally represent external functions and the
 
 ## Unstable attributes
 
+- ``@simd`` Marks a function or compiler intrinsic as SIMD code. On x86 and x86_64, the compiler requires an explicit ``-cpu-features`` list when SIMD code is present. The attribute is a compiler marker and does not become an LLVM attribute.
 - ``@promote(T -> U, ...)`` Promotes variadic argument types before a call is lowered.
 - ``@asmAlignStack`` Aligns the stack for an assembler block.
 - ``@asmSyntax("Intel" | "AT&T")`` Chooses the inline assembler syntax.
 - ``@asmThrow`` Lets assembler errors propagate.
 - ``@asmSideEffects`` Tells the backend the assembler block has side effects.
 
-These apply to the assembler constructs in ``assembler/``, which are also unstable.
+```thrust
+fn addPs256(
+    left: NativeVector[f32; 8],
+    right: NativeVector[f32; 8]
+) NativeVector[f32; 8] @public @simd {
+    return rawAddPs256(left, right);
+}
+```
+
+The assembler attributes in this list apply to the assembler constructs in ``assembler/``, which are also unstable.
 
 ## Calling conventions
 
